@@ -25,22 +25,20 @@ export function CarouselPlugin({
 			onMouseEnter={plugin.current.stop}
 			onMouseLeave={plugin.current.reset}
 		>
-			<CarouselContent className="max-w-full max-h-full">
+			<CarouselContent>
 				{carouselData.map((data, index) => (
 					<CarouselItem key={index}>
-						<div className="">
-							<Card>
-								<CardContent className="flex justify-center items-center p-0">
-									<Image
-										className="object-cover object-center"
-										src={data.src}
-										alt={data.alt}
-										width={500}
-										height={1500}
-									/>
-								</CardContent>
-							</Card>
-						</div>
+						<Card>
+							<CardContent className="flex justify-center items-center p-0">
+								<Image
+									className="object-cover object-center"
+									src={data.src}
+									alt={data.alt}
+									width={500}
+									height={1500}
+								/>
+							</CardContent>
+						</Card>
 					</CarouselItem>
 				))}
 			</CarouselContent>
