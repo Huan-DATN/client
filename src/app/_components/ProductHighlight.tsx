@@ -1,4 +1,4 @@
-import ProductCard from '@/app/_components/ProductCard';
+import ProductGrid from '@/app/_components/ProductGrid';
 
 export default function ProductHighlight({
 	productsData,
@@ -15,11 +15,7 @@ export default function ProductHighlight({
 					</h2>
 				</div>
 			</div>
-			<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-				{productsData.map((product: any, index: number) => {
-					return <ProductCard key={index} product={product} />;
-				})}
-			</div>
+			<ProductGrid />
 		</div>
 	);
 }

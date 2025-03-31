@@ -8,10 +8,9 @@ export default function ProductCard({ product }: { product: any }) {
 	return (
 		<div
 			onClick={() => {
-				// console.log(`ProductCard Clicked ${product.id}`);
-				router.push(`/product/${product.id}`);
+				router.push(`/products/${product.id}`);
 			}}
-			className="mx-auto mt-11 w-80 transform overflow-hidden rounded-lg bg-white dark:bg-slate-800 shadow-md duration-300 hover:scale-105 hover:shadow-lg"
+			className="border rounded-lg shadow-sm hover:shadow-md hover:scale-105 transition-transform duration-200 p-3 bg-white flex flex-col cursor-pointer"
 		>
 			<Image
 				className="h-48 w-full object-cover object-center"
