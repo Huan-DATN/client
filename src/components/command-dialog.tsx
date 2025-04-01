@@ -13,7 +13,7 @@ export function CommandDialogDemo() {
 			if (e.key === 'Enter' && value.trim()) {
 				e.preventDefault();
 				console.log('Navigating to search with value:', value);
-				router.push(`/search?q=${encodeURIComponent(value)}`);
+				router.push(`/products?q=${encodeURIComponent(value)}`);
 			}
 		};
 

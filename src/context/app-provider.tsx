@@ -1,5 +1,5 @@
 'use client';
-import { AccountResType } from '@/schemaValidations/account.schema';
+import { UserResType } from '@/schemaValidations/user.schema';
 import {
 	createContext,
 	useCallback,
@@ -8,7 +8,7 @@ import {
 	useState,
 } from 'react';
 
-type User = AccountResType['data'];
+type User = UserResType['data'];
 
 const AppContext = createContext<{
 	user: User | null;
@@ -23,6 +23,7 @@ export const useAppContext = () => {
 	const context = useContext(AppContext);
 	return context;
 };
+
 export default function AppProvider({
 	children,
 }: {
