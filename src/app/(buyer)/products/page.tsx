@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/pagination';
 import { productsData } from '@/hardData/hardData';
 
-export default function page() {
+export default async function page() {
 	const products = productsData;
 
 	const {

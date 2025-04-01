@@ -14,7 +14,7 @@ export default function ProductHighlight({
 					</h2>
 				</div>
 			</div>
-			<ProductGrid />
+			<ProductGrid products={productsData} />
 		</div>
 	);
 }
