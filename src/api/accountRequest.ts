@@ -1,15 +1,15 @@
 import http from '@/lib/http';
-import { AccountResType } from '@/schemaValidations/account.schema';
+import { UserResType } from '@/schemaValidations/user.schema';
 
-const accountRequest = {
+const userRequest = {
 	me: (sessionToken: string) =>
-		http.get<AccountResType>('/account/me', {
+		http.get<UserResType>('/user/me', {
 			headers: { Authorization: `Bearer ${sessionToken}` },
 		}),
 	meClient: () => {
-		return http.get<AccountResType>('/account/me');
+		return http.get<UserResType>('/user/me');
 	},
-	updateMe: (body: any) => http.put<AccountResType>('/account/me', body),
+	updateMe: (body: any) => http.put<UserResType>('/user/me', body),
 };
 
-export default accountRequest;
+export default userRequest;

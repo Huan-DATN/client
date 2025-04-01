@@ -11,6 +11,7 @@ import {
 	FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { useAppContext } from '@/context/app-provider';
 import { useToast } from '@/hooks/use-toast';
 import { handleErrorApi } from '@/lib/utils';
 import {
@@ -25,6 +26,7 @@ import { useForm } from 'react-hook-form';
 
 const RegisterForm = () => {
 	const [loading, setLoading] = useState(false);
+	const { setUser } = useAppContext();
 	const form = useForm<RegisterBodyType>({
 		resolver: zodResolver(RegisterBody),
 		defaultValues: {
@@ -51,7 +53,9 @@ const RegisterForm = () => {
 			toast({
 				description: result.payload.message,
 			});
+			setUser(result.payload.data.user);
 			router.push('/');
+			router.refresh();
 		} catch (error: any) {
 			handleErrorApi({
 				error,

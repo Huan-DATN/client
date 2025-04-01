@@ -97,13 +97,3 @@ export default function NavMenu({ loggedIn }: NavMenuProps) {
 		</NavigationMenu>
 	);
 }
-
-const NavigationMenuLinkCustom = ({ children }: any) => {
-	return (
-		<NavigationMenuLink
-			className={`${navigationMenuTriggerStyle()} mr-8 bg-transparent text-white`}
-		>
-			{children}
-		</NavigationMenuLink>
-	);
-};

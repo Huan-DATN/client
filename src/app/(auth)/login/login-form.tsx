@@ -11,6 +11,7 @@ import {
 	FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { useAppContext } from '@/context/app-provider';
 import { useToast } from '@/hooks/use-toast';
 import { handleErrorApi } from '@/lib/utils';
 import { LoginBody, LoginBodyType } from '@/schemaValidations/auth.schema';
@@ -22,6 +23,7 @@ import { useForm } from 'react-hook-form';
 
 const LoginForm = () => {
 	const [loading, setLoading] = useState(false);
+	const { setUser } = useAppContext();
 	const form = useForm<LoginBodyType>({
 		resolver: zodResolver(LoginBody),
 		defaultValues: {
@@ -46,7 +48,9 @@ const LoginForm = () => {
 			toast({
 				description: result.payload.message,
 			});
+			setUser(result.payload.data.user);
 			router.push('/');
+			router.refresh();
 		} catch (error: any) {
 			handleErrorApi({
 				error,

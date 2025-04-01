@@ -1,13 +1,11 @@
+'use client';
+
 import { CommandDialogDemo } from '@/components/command-dialog';
 import NavMenu from '@/components/nav-menu';
-import { cookies } from 'next/headers';
+import { useAppContext } from '@/context/app-provider';
 import Image from 'next/image';
 export default function Header() {
-	const cookieStorage = cookies();
-	const token = cookieStorage.get('sessionToken');
-
-	// Check if the user is logged in
-	const isLoggedIn = token !== undefined;
+	const { isAuthenticated } = useAppContext();
 
 	return (
 		<header className="container max-w-full mx-auto">
@@ -26,7 +24,7 @@ export default function Header() {
 				/>
 			</section>
 			<section className="flex flex-row justify-between items-center bg-green-600 px-4 py-5">
-				<NavMenu loggedIn={isLoggedIn} />
+				<NavMenu loggedIn={Boolean(isAuthenticated)} />
 				<div>
 					<CommandDialogDemo />
 				</div>

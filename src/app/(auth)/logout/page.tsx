@@ -14,6 +14,7 @@ export default function Logout() {
 		if (sessionToken === clientSessionToken.value) {
 			authRequest.logoutFromNextClientToNextServer(true).then((res) => {
 				router.push(`/login?redirectFrom=${pathname}`);
+				router.refresh();
 			});
 		}
 	}, [sessionToken, router, pathname]);

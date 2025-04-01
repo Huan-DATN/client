@@ -5,7 +5,6 @@ export default function ProductHighlight({
 }: {
 	productsData: any[];
 }) {
-	console.log(productsData);
 	return (
 		<div>
 			<div className="p-4">
