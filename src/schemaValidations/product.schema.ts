@@ -9,6 +9,18 @@ export const ProductCategorySchema = z.object({
 	updatedAt: z.date(),
 });
 
+export const ProductSchema = z.object({
+	id: z.number(),
+	name: z.string(),
+	description: z.string(),
+	quantity: z.number(),
+	price: z.number(),
+	image: z.string(),
+	createdAt: z.date(),
+	updatedAt: z.date(),
+	userId: z.number(),
+});
+
 export type ProductCategorySchemaType = z.TypeOf<typeof ProductCategorySchema>;
 
 export const ProductCategoryListRes = z
@@ -21,3 +33,20 @@ export const ProductCategoryListRes = z
 export type ProductCategoryListResType = z.TypeOf<
 	typeof ProductCategoryListRes
 >;
+
+export const ProductListRes = z.object({
+	data: z.object({
+		products: z.array(ProductSchema),
+		totalPages: z.number(),
+		totalProducts: z.number(),
+	}),
+	message: z.string(),
+});
+
+export type ProductListResType = z.TypeOf<typeof ProductListRes>;
+
+export const SearchProductQuery = z.object({
+	name: z.string().optional(),
+	categoryIds: z.string().optional(),
+});
+export type SearchProductQueryType = z.infer<typeof SearchProductQuery>;

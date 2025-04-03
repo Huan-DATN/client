@@ -1,5 +1,3 @@
-import ProductGrid from '@/app/_components/ProductGrid';
-
 export default function ProductHighlight({
 	productsData,
 }: {
@@ -14,7 +12,6 @@ export default function ProductHighlight({
 					</h2>
 				</div>
 			</div>
-			<ProductGrid products={productsData} />
 		</div>
 	);
 }

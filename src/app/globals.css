@@ -81,4 +81,8 @@ body {
 	.text-mini {
 		@apply size-2;
 	}
+
+	.div-center {
+		@apply flex items-center justify-center;
+	}
 }
