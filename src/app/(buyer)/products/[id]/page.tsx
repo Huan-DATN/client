@@ -1,13 +1,17 @@
-'use client';
-import RatingProduct from '@/app/(buyer)/products/_components/RatingProduct';
+import productRequest from '@/api/productRequest';
+import AddToCart from '@/app/(buyer)/products/_components/add-to-cart';
+import RatingProduct from '@/app/(buyer)/products/_components/rating-product';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
 
-export default function ProductDetail({ params }: { params: { id: string } }) {
-	const [quantity, setQuantity] = useState(1);
+export default async function ProductDetail({
+	params,
+}: {
+	params: { id: string };
+}) {
+	// const [quantity, setQuantity] = useState(1);
 	const { id } = params; // TODO: Fetch product details from an API or database using the id
-	const product = {
+	const mockProduct = {
 		id,
 		name: '20g cải bẹ dưa (cải bẹ muối dưa) dễ trồng, năng suất cao',
 		price: 100,
@@ -20,10 +24,10 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
 		startRating: 3,
 	};
 
-	const handleAddToCart = () => {
-		// TODO: Implement add to cart logic
-	};
+	const { payload } = await productRequest.getDetail(Number(id));
+	const product = payload.data;
 
+	console.log(product);
 	return (
 		<div className="max-w-6xl mx-auto p-6">
 			<div className="flex flex-col md:flex-row gap-6">
@@ -32,45 +36,27 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
 					alt={product.name}
 					width={400}
 					height={400}
+					className="w-full md:w-1/2 h-auto object-cover rounded-lg shadow-md"
 				/>
 				<div className="flex-1">
 					<h1 className="text-xl font-bold mb-2">{product.name}</h1>
 					<div className="text-yellow-400 mb-2">
 						{[...Array(5)].map((_, index) => (
 							<span key={index} className="text-green-400">
-								{index < product.startRating ? '⭐' : ''}
+								{index < mockProduct.startRating ? '⭐' : ''}
 							</span>
 						))}
 					</div>
 					<Link href={`/shop/${product.userId}`}>
-						<span className="text-sm text-gray-600 mb-2">Kha Liễu Loan</span>
+						<span className="text-sm text-gray-600 mb-2">
+							{product.user.firstName} {product.user.lastName}
+						</span>
 					</Link>
 					<p className="text-blue-600 text-lg font-bold mb-2">
 						Giá bán: {product.price} ₫
 					</p>
-					<p className="text-sm mb-4">{product.name}</p>
 
-					<div className="flex items-center gap-2 mb-4">
-						<button
-							onClick={() => setQuantity(Math.max(quantity - 1, 1))}
-							className="px-2 py-1 border rounded"
-						>
-							-
-						</button>
-						<span>{quantity}</span>
-						<button
-							onClick={() => setQuantity(quantity + 1)}
-							className="px-2 py-1 border rounded"
-						>
-							+
-						</button>
-					</div>
-					<button
-						className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
-						onClick={handleAddToCart}
-					>
-						Thêm vào giỏ
-					</button>
+					<AddToCart id={product.id} />
 				</div>
 			</div>
 			<div className="mt-6">

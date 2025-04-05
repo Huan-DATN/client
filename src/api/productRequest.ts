@@ -1,6 +1,7 @@
 import http from '@/lib/http';
 import { PaginationReqType } from '@/schemaValidations/common.schema';
 import {
+	ProductDetailResType,
 	ProductListResType,
 	SearchProductQueryType,
 } from '@/schemaValidations/product.schema';
@@ -14,6 +15,8 @@ const productRequest = {
 			`/product?page=${page}&name=${name}&categoryIds=${categoryIds}`,
 			{}
 		),
+	getDetail: (id: number) =>
+		http.get<ProductDetailResType>(`/product/${id}`, {}),
 };
 
 export default productRequest;
