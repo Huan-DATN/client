@@ -1,4 +1,4 @@
-import ProductHighlight from '@/app/_components/ProductHighlight';
+import ProductHighlight from '@/app/_components/product-highlight';
 import { CarouselPlugin } from '@/components/carousel-plugin';
 import Header from '@/components/header';
 import { carouselData, productsData } from '@/hardData/hardData';

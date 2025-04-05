@@ -7,6 +7,11 @@ const nextConfig = {
 				hostname: 'media.vov.vn',
 				pathname: '/**',
 			},
+			{
+				protocol: 'https',
+				hostname: 'placehold.co',
+				pathname: '/**',
+			},
 		],
 	},
 };
