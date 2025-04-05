@@ -30,7 +30,15 @@ export type ProductCategorySchemaType = z.TypeOf<typeof ProductCategorySchema>;
 
 export const ProductCategoryListRes = z
 	.object({
-		data: z.array(ProductCategorySchema),
+		data: z.object({
+			categories: z.array(ProductCategorySchema),
+			prices: z.array(
+				z.object({
+					key: z.number(),
+					value: z.string(),
+				})
+			),
+		}),
 		message: z.string(),
 	})
 	.strict();
@@ -53,6 +61,7 @@ export type ProductListResType = z.TypeOf<typeof ProductListRes>;
 export const SearchProductQuery = z.object({
 	name: z.string().optional(),
 	categoryIds: z.string().optional(),
+	priceIds: z.string().optional(),
 });
 export type SearchProductQueryType = z.infer<typeof SearchProductQuery>;
 

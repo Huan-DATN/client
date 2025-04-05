@@ -8,7 +8,7 @@ type CheckboxCategoryParams = {
 
 export default function CheckboxCategory({ category }: CheckboxCategoryParams) {
 	const searchParams = useSearchParams();
-	const selectedCategory = searchParams.get('categoryId') || '';
+	const selectedCategory = searchParams.get('categoryIds') || '';
 	const selectedCategoryArray = selectedCategory.split(',');
 
 	const router = useRouter();
@@ -27,10 +27,15 @@ export default function CheckboxCategory({ category }: CheckboxCategoryParams) {
 					params.append(key, value);
 				});
 
-				if (newSelectedCategory.length === 0) {
-					params.delete('categoryId');
+				if (newSelectedCategory.length === 1) {
+					params.delete('categoryIds');
 				} else {
-					params.set('categoryId', newSelectedCategory.join(','));
+					params.set('categoryIds', newSelectedCategory.join(','));
+				}
+
+				const pageParam = params.get('page');
+				if (pageParam) {
+					params.delete('page');
 				}
 				// location.href = `?${params.toString()}`;
 				router.push(`?${params.toString()}`);
