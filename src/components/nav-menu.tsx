@@ -1,17 +1,7 @@
 'use client';
 
+import AlertDialogComponent from '@/components/alert-dialog';
 import ButtonLogout from '@/components/button-logout';
-import {
-	AlertDialog,
-	AlertDialogAction,
-	AlertDialogCancel,
-	AlertDialogContent,
-	AlertDialogDescription,
-	AlertDialogFooter,
-	AlertDialogHeader,
-	AlertDialogTitle,
-	AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
 import {
 	NavigationMenu,
 	NavigationMenuItem,
@@ -19,13 +9,19 @@ import {
 	NavigationMenuList,
 	navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
-import { HomeOutlined, ProductOutlined } from '@ant-design/icons';
+import { useAppContext } from '@/context/app-provider';
+import {
+	HomeOutlined,
+	ProductOutlined,
+	SettingOutlined,
+} from '@ant-design/icons';
 import Link from 'next/link';
 interface NavMenuProps {
 	loggedIn: boolean;
 }
 
-export default function NavMenu({ loggedIn }: NavMenuProps) {
+export default function NavMenu() {
+	const { isAuthenticated } = useAppContext();
 	return (
 		<NavigationMenu>
 			<NavigationMenuList>
@@ -51,38 +47,45 @@ export default function NavMenu({ loggedIn }: NavMenuProps) {
 					</Link>
 				</NavigationMenuItem>
 
-				{loggedIn && (
-					<NavigationMenuItem>
-						<AlertDialog>
-							<AlertDialogTrigger asChild>
+				{isAuthenticated && (
+					<>
+						<NavigationMenuItem>
+							<Link href="/account/me" legacyBehavior passHref>
+								<NavigationMenuLink
+									className={`${navigationMenuTriggerStyle()} mr-8 bg-transparent text-white`}
+								>
+									<SettingOutlined />
+									Tài khoản
+								</NavigationMenuLink>
+							</Link>
+						</NavigationMenuItem>
+						<AlertDialogComponent
+							alertDialogTrigger={
 								<NavigationMenuLink
 									className={`${navigationMenuTriggerStyle()} mr-8 bg-transparent text-white`}
 								>
 									Đăng xuất
 								</NavigationMenuLink>
-							</AlertDialogTrigger>
-							<AlertDialogContent>
-								<AlertDialogHeader>
-									<AlertDialogTitle>
-										Bạn sẽ đăng xuất khỏi hệ thống
-									</AlertDialogTitle>
-									<AlertDialogDescription>
-										Bạn có chắc chắn muốn đăng xuất khỏi hệ thống không? Nếu bạn
-										đăng xuất, bạn sẽ không thể truy cập vào các tính năng của
-										hệ thống nữa.
-									</AlertDialogDescription>
-								</AlertDialogHeader>
-								<AlertDialogFooter>
-									<AlertDialogCancel>Huỷ</AlertDialogCancel>
-									<AlertDialogAction asChild>
-										<ButtonLogout />
-									</AlertDialogAction>
-								</AlertDialogFooter>
-							</AlertDialogContent>
-						</AlertDialog>
-					</NavigationMenuItem>
+							}
+							alertDialogTitle={<p>Đăng xuất</p>}
+							alertDialogDescription={
+								<p>Bạn có chắc chắn muốn đăng xuất không?</p>
+							}
+							alertDialogAction={<ButtonLogout />}
+						/>
+						<NavigationMenuItem>
+							<Link href="/cart/me" legacyBehavior passHref>
+								<NavigationMenuLink
+									className={`${navigationMenuTriggerStyle()} mr-8 bg-transparent text-white`}
+								>
+									<SettingOutlined />
+									Giỏ hàng
+								</NavigationMenuLink>
+							</Link>
+						</NavigationMenuItem>
+					</>
 				)}
-				{!loggedIn && (
+				{!isAuthenticated && (
 					<NavigationMenuItem>
 						<Link href="/login" legacyBehavior passHref>
 							<NavigationMenuLink

@@ -1,5 +1,8 @@
 import http from '@/lib/http';
-import { UserResType } from '@/schemaValidations/user.schema';
+import {
+	UpdatePasswordResType,
+	UserResType,
+} from '@/schemaValidations/user.schema';
 
 const userRequest = {
 	me: (sessionToken: string) =>
@@ -9,7 +12,9 @@ const userRequest = {
 	meClient: () => {
 		return http.get<UserResType>('/user/me');
 	},
-	updateMe: (body: any) => http.put<UserResType>('/user/me', body),
+	updateMe: (body: any) => http.put<UserResType>('/user/update/me', body),
+	updatePassword: (body: any) =>
+		http.put<UpdatePasswordResType>('/user/update/password', body, {}),
 };
 
 export default userRequest;
