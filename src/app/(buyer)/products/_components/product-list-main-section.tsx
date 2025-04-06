@@ -10,12 +10,14 @@ type productsListType = ProductListResType['data']['products'];
 
 export default function ProductListMainSection() {
 	const searchParams = useSearchParams();
-	const selectedCategory = searchParams.get('categoryId') || '';
+	const selectedCategory = searchParams.get('categoryIds') || '';
+	const selectedPrice = searchParams.get('priceIds') || '';
 	const selectedPage = searchParams.get('page') || 1;
-	const [products, setProducts] = useState<productsListType>([]);
+	const [products, setProducts] = useState<productsListType | null>(null);
 	const [totalPages, setTotalPages] = useState(0);
-
+	const [loading, setLoading] = useState(true);
 	useEffect(() => {
+		setLoading(true);
 		try {
 			const fetchProducts = async () => {
 				const response = await productRequest.getList(
@@ -25,6 +27,7 @@ export default function ProductListMainSection() {
 					},
 					{
 						categoryIds: selectedCategory,
+						priceIds: selectedPrice,
 					}
 				);
 				setProducts(response.payload.data.products);
@@ -32,20 +35,20 @@ export default function ProductListMainSection() {
 			};
 
 			fetchProducts();
+			setLoading(false);
 		} catch (error) {
 			console.error('Error fetching products:', error);
 		}
-	}, [selectedCategory, selectedPage]);
+	}, [selectedCategory, selectedPage, selectedPrice, loading]);
 
 	return (
 		<>
-			{products.length === 0 && (
+			{loading && (
 				<div className="flex items-center justify-center h-96">
-					<p className="text-gray-500">No products found</p>
+					<p className="text-gray-500">Loading...</p>
 				</div>
 			)}
-
-			{products.length > 0 && (
+			{products && (
 				<>
 					<section className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4">
 						<ProductGrid products={products} />
@@ -54,6 +57,11 @@ export default function ProductListMainSection() {
 						<PaginationComponent totalPages={totalPages} />
 					</div>
 				</>
+			)}
+			{products?.length === 0 && (
+				<div className="flex items-center justify-center h-96">
+					<p className="text-gray-500">No products found</p>
+				</div>
 			)}
 		</>
 	);

@@ -9,10 +9,10 @@ import {
 const productRequest = {
 	getList: (
 		{ page, limit }: PaginationReqType,
-		{ name = '%%', categoryIds }: SearchProductQueryType
+		{ name = '%%', categoryIds, priceIds }: SearchProductQueryType
 	) =>
 		http.get<ProductListResType>(
-			`/product?page=${page}&name=${name}&categoryIds=${categoryIds}`,
+			`/product?page=${page}&name=${name}&categoryIds=${categoryIds}&priceIds=${priceIds}&limit=${limit}`,
 			{}
 		),
 	getDetail: (id: number) =>
