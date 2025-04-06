@@ -3,20 +3,20 @@
 import userRequest from '@/api/accountRequest';
 import { Button } from '@/components/ui/button';
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { handleErrorApi } from '@/lib/utils';
 import {
-  UpdateMeBody,
-  UpdateMeBodyType,
-  UserResType,
+	UpdateMeBody,
+	UpdateMeBodyType,
+	UserResType,
 } from '@/schemaValidations/user.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';

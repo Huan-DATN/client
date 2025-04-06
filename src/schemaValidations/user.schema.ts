@@ -32,4 +32,22 @@ export const UpdateMeBody = z.object({
 	address: z.string().min(2).max(256),
 });
 
+export const UpdatePasswordBody = z
+	.object({
+		oldPassword: z.string().min(6).max(256),
+		newPassword: z.string().min(6).max(256),
+		confirmPassword: z.string().min(6).max(256),
+	})
+	.refine((data) => data.newPassword === data.confirmPassword, {
+		message: 'New password do not match',
+	});
+
+export const UpdatePasswordRes = z.object({
+	message: z.string(),
+});
+
+export type UpdatePasswordResType = z.TypeOf<typeof UpdatePasswordRes>;
+
+export type UpdatePasswordBodyType = z.TypeOf<typeof UpdatePasswordBody>;
+
 export type UpdateMeBodyType = z.TypeOf<typeof UpdateMeBody>;
