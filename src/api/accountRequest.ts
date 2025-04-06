@@ -9,7 +9,7 @@ const userRequest = {
 	meClient: () => {
 		return http.get<UserResType>('/user/me');
 	},
-	updateMe: (body: any) => http.put<UserResType>('/user/me', body),
+	updateMe: (body: any) => http.put<UserResType>('/user/update/me', body),
 };
 
 export default userRequest;

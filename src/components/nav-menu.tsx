@@ -19,7 +19,11 @@ import {
 	NavigationMenuList,
 	navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
-import { HomeOutlined, ProductOutlined } from '@ant-design/icons';
+import {
+	HomeOutlined,
+	ProductOutlined,
+	SettingOutlined,
+} from '@ant-design/icons';
 import Link from 'next/link';
 interface NavMenuProps {
 	loggedIn: boolean;
@@ -52,35 +56,47 @@ export default function NavMenu({ loggedIn }: NavMenuProps) {
 				</NavigationMenuItem>
 
 				{loggedIn && (
-					<NavigationMenuItem>
-						<AlertDialog>
-							<AlertDialogTrigger asChild>
+					<>
+						<NavigationMenuItem>
+							<Link href="/account/me" legacyBehavior passHref>
 								<NavigationMenuLink
 									className={`${navigationMenuTriggerStyle()} mr-8 bg-transparent text-white`}
 								>
-									Đăng xuất
+									<SettingOutlined />
+									Tài khoản
 								</NavigationMenuLink>
-							</AlertDialogTrigger>
-							<AlertDialogContent>
-								<AlertDialogHeader>
-									<AlertDialogTitle>
-										Bạn sẽ đăng xuất khỏi hệ thống
-									</AlertDialogTitle>
-									<AlertDialogDescription>
-										Bạn có chắc chắn muốn đăng xuất khỏi hệ thống không? Nếu bạn
-										đăng xuất, bạn sẽ không thể truy cập vào các tính năng của
-										hệ thống nữa.
-									</AlertDialogDescription>
-								</AlertDialogHeader>
-								<AlertDialogFooter>
-									<AlertDialogCancel>Huỷ</AlertDialogCancel>
-									<AlertDialogAction asChild>
-										<ButtonLogout />
-									</AlertDialogAction>
-								</AlertDialogFooter>
-							</AlertDialogContent>
-						</AlertDialog>
-					</NavigationMenuItem>
+							</Link>
+						</NavigationMenuItem>
+						<NavigationMenuItem>
+							<AlertDialog>
+								<AlertDialogTrigger asChild>
+									<NavigationMenuLink
+										className={`${navigationMenuTriggerStyle()} mr-8 bg-transparent text-white`}
+									>
+										Đăng xuất
+									</NavigationMenuLink>
+								</AlertDialogTrigger>
+								<AlertDialogContent>
+									<AlertDialogHeader>
+										<AlertDialogTitle>
+											Bạn sẽ đăng xuất khỏi hệ thống
+										</AlertDialogTitle>
+										<AlertDialogDescription>
+											Bạn có chắc chắn muốn đăng xuất khỏi hệ thống không? Nếu
+											bạn đăng xuất, bạn sẽ không thể truy cập vào các tính năng
+											của hệ thống nữa.
+										</AlertDialogDescription>
+									</AlertDialogHeader>
+									<AlertDialogFooter>
+										<AlertDialogCancel>Huỷ</AlertDialogCancel>
+										<AlertDialogAction asChild>
+											<ButtonLogout />
+										</AlertDialogAction>
+									</AlertDialogFooter>
+								</AlertDialogContent>
+							</AlertDialog>
+						</NavigationMenuItem>
+					</>
 				)}
 				{!loggedIn && (
 					<NavigationMenuItem>
