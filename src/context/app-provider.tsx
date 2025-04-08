@@ -1,4 +1,5 @@
 'use client';
+import { store } from '@/redux/store';
 import { UserResType } from '@/schemaValidations/user.schema';
 import {
 	createContext,
@@ -7,6 +8,7 @@ import {
 	useEffect,
 	useState,
 } from 'react';
+import { Provider } from 'react-redux';
 
 type User = UserResType['data'];
 
@@ -51,14 +53,16 @@ export default function AppProvider({
 	}, [setUserState]);
 
 	return (
-		<AppContext.Provider
-			value={{
-				user,
-				setUser,
-				isAuthenticated,
-			}}
-		>
-			{children}
-		</AppContext.Provider>
+		<Provider store={store}>
+			<AppContext.Provider
+				value={{
+					user,
+					setUser,
+					isAuthenticated,
+				}}
+			>
+				{children}
+			</AppContext.Provider>
+		</Provider>
 	);
 }

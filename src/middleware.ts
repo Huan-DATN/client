@@ -1,7 +1,7 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
-const privatePaths = ['/me'];
+const privatePaths = ['/account/me'];
 const authPaths = ['/login', '/register'];
 
 const productEditRegex = /^\/products\/\d+\/edit$/;
@@ -16,7 +16,7 @@ export function middleware(request: NextRequest) {
 	}
 	// Đăng nhập rồi thì không cho vào login/register nữa
 	if (authPaths.some((path) => pathname.startsWith(path)) && sessionToken) {
-		return NextResponse.redirect(new URL('/me', request.url));
+		return NextResponse.redirect(new URL('/', request.url));
 	}
 	if (pathname.match(productEditRegex) && !sessionToken) {
 		return NextResponse.redirect(new URL('/login', request.url));
