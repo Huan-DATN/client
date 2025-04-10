@@ -1,25 +1,35 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { useState } from 'react';
+import { useAppDispatch } from '@/hooks/use-app-dispatch';
+import { useAppSelector } from '@/hooks/use-app-selector';
+import {
+	decrement,
+	increment,
+	setProductId,
+} from '@/redux/currentProduct/currentProductReducer';
+import Link from 'next/link';
+import { useEffect } from 'react';
 
 type AddToCartParams = {
 	id: number;
 };
 
 export default function AddToCart({ id }: AddToCartParams) {
-	const [quantity, setQuantity] = useState(1);
+	const dispatch = useAppDispatch();
+	const quantity = useAppSelector((state) => state.currentProduct.quantity);
+
+	useEffect(() => {
+		dispatch(setProductId(id));
+	}, [dispatch, id]);
+
 	const handleIncrease = () => {
-		setQuantity((prev) => prev + 1);
+		dispatch(increment());
 	};
 	const handleDecrease = () => {
-		setQuantity((prev) => (prev > 1 ? prev - 1 : prev));
+		dispatch(decrement());
 	};
 
-	const handleAddToCart = () => {
-		// TODO: Implement add to cart logic
-		console.log(`Added ${quantity} of product ${id} to cart`);
-	};
 	return (
 		<>
 			<div className="flex items-center gap-2 mb-4">
@@ -31,11 +41,12 @@ export default function AddToCart({ id }: AddToCartParams) {
 					+
 				</Button>
 			</div>
+
 			<Button
 				className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
-				onClick={handleAddToCart}
+				asChild
 			>
-				Thêm vào giỏ
+				<Link href={`/cart/add/${id}`}>Thêm vào giỏ</Link>
 			</Button>
 		</>
 	);

@@ -45,6 +45,8 @@ const LoginForm = () => {
 				expiresAt: result.payload.data.expiresAt,
 			});
 
+			setUser(result.payload.data.user);
+
 			toast({
 				description: result.payload.message,
 			});

@@ -46,7 +46,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 							{product.user.firstName} {product.user.lastName}
 						</span>
 					</Link>
-					<p className="text-blue-600 text-lg font-bold mb-2">
+					<p className="text-green-600 text-lg font-bold mb-2">
 						Giá bán: {product.price} ₫
 					</p>
 
