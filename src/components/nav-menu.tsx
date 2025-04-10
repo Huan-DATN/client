@@ -9,19 +9,14 @@ import {
 	NavigationMenuList,
 	navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
-import { useAppContext } from '@/context/app-provider';
 import {
 	HomeOutlined,
 	ProductOutlined,
 	SettingOutlined,
 } from '@ant-design/icons';
 import Link from 'next/link';
-interface NavMenuProps {
-	loggedIn: boolean;
-}
 
-export default function NavMenu() {
-	const { isAuthenticated } = useAppContext();
+export default function NavMenu({ token }: { token: string | undefined }) {
 	return (
 		<NavigationMenu>
 			<NavigationMenuList>
@@ -47,7 +42,7 @@ export default function NavMenu() {
 					</Link>
 				</NavigationMenuItem>
 
-				{isAuthenticated && (
+				{token && (
 					<>
 						<NavigationMenuItem>
 							<Link href="/account/me" legacyBehavior passHref>
@@ -85,7 +80,7 @@ export default function NavMenu() {
 						</NavigationMenuItem>
 					</>
 				)}
-				{!isAuthenticated && (
+				{!token && (
 					<NavigationMenuItem>
 						<Link href="/login" legacyBehavior passHref>
 							<NavigationMenuLink

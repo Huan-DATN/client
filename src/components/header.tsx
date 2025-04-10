@@ -1,7 +1,12 @@
 import { CommandDialogDemo } from '@/components/command-dialog';
 import NavMenu from '@/components/nav-menu';
+import { cookies } from 'next/headers';
 import Image from 'next/image';
-export default function Header() {
+
+export default async function Header() {
+	const cookiesStore = await cookies();
+	const token = cookiesStore.get('sessionToken')?.value;
+
 	return (
 		<header className="container max-w-full mx-auto">
 			<section className="flex justify-between items-center py-4 px-10">
@@ -19,7 +24,7 @@ export default function Header() {
 				/>
 			</section>
 			<section className="flex flex-row justify-between items-center bg-green-600 px-4 py-5">
-				<NavMenu />
+				<NavMenu token={token} />
 				<div>
 					<CommandDialogDemo />
 				</div>

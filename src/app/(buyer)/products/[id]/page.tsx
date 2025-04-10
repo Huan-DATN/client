@@ -4,12 +4,7 @@ import RatingProduct from '@/app/(buyer)/products/_components/rating-product';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default async function ProductDetail({
-	params,
-}: {
-	params: { id: string };
-}) {
-	// const [quantity, setQuantity] = useState(1);
+export default async function Page({ params }: { params: { id: string } }) {
 	const { id } = params; // TODO: Fetch product details from an API or database using the id
 	const mockProduct = {
 		id,
@@ -27,7 +22,6 @@ export default async function ProductDetail({
 	const { payload } = await productRequest.getDetail(Number(id));
 	const product = payload.data;
 
-	console.log(product);
 	return (
 		<div className="max-w-6xl mx-auto p-6">
 			<div className="flex flex-col md:flex-row gap-6">
@@ -52,7 +46,7 @@ export default async function ProductDetail({
 							{product.user.firstName} {product.user.lastName}
 						</span>
 					</Link>
-					<p className="text-blue-600 text-lg font-bold mb-2">
+					<p className="text-green-600 text-lg font-bold mb-2">
 						Giá bán: {product.price} ₫
 					</p>
 

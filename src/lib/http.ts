@@ -86,19 +86,21 @@ const request = async <Response>(
 			: JSON.stringify(options.body)
 		: undefined;
 
-	const baseHeaders =
-		options?.body instanceof FormData
-			? {
-					Authorization: clientSessionToken.value
-						? `Bearer ${clientSessionToken.value}`
-						: '',
-			  }
+	const baseHeaders: {
+		[key: string]: string;
+	} =
+		body instanceof FormData
+			? {}
 			: {
 					'Content-Type': 'application/json',
-					Authorization: clientSessionToken.value
-						? `Bearer ${clientSessionToken.value}`
-						: '',
 			  };
+
+	if (isClient()) {
+		const sessionToken = localStorage.getItem('sessionToken');
+		if (sessionToken) {
+			baseHeaders.Authorization = `Bearer ${sessionToken}`;
+		}
+	}
 
 	const baseUrl =
 		options?.baseUrl === undefined
@@ -166,21 +168,20 @@ const request = async <Response>(
 	}
 
 	// Interceptors here for set cookies
-
-	if (typeof window !== 'undefined') {
+	if (isClient()) {
 		if (
 			['auth/login', 'auth/register'].some(
 				(item) => item === normalizePath(url)
 			)
 		) {
-			clientSessionToken.value = (payload as LoginResType).data.token as string;
-			clientSessionToken.expiresAt = (payload as LoginResType).data.expiresAt;
+			const { token, expiresAt } = (payload as LoginResType).data;
+			localStorage.setItem('sessionToken', token);
+			localStorage.setItem('sessionTokenExpiresAt', expiresAt);
 		} else if ('auth/logout' === normalizePath(url)) {
-			clientSessionToken.value = '';
-			clientSessionToken.expiresAt = new Date().toISOString();
+			localStorage.removeItem('sessionToken');
+			localStorage.removeItem('sessionTokenExpiresAt');
 		}
 	}
-
 	return data;
 };
 
